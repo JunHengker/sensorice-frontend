@@ -73,8 +73,6 @@ export const useToastErrorHandler = () => {
       toast({
         title: "Error",
         description: "Something went wrong. Please try again later.",
-        status: "error",
-        isClosable: true,
       });
       return;
     }
@@ -89,8 +87,6 @@ export const useToastErrorHandler = () => {
         title: errorCode,
         description:
           error.response.data.message || "An unexpected error occurred.",
-        status: "error",
-        isClosable: true,
       });
       return;
     }
@@ -100,8 +96,6 @@ export const useToastErrorHandler = () => {
       title: "Network Error",
       description:
         "Unable to connect to the server. Please check your connection.",
-      status: "error",
-      isClosable: true,
     });
   };
 };
