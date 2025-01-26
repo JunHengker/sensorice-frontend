@@ -335,12 +335,16 @@ export const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Follow Us</h4>
             <div className="flex space-x-4">
               <a href="#" className="hover:text-green-300">
-                Facebook
+                Facebook (soon)
               </a>
+
               <a href="#" className="hover:text-green-300">
-                Twitter
+                Twitter (soon)
               </a>
-              <a href="#" className="hover:text-green-300">
+              <a
+                href="https://linked.in/in/alvinyohanes"
+                className="hover:text-green-300"
+              >
                 LinkedIn
               </a>
             </div>
