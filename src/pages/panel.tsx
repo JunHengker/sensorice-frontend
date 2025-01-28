@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import useSWR from "swr";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-import { Header, Footer } from "./index";
+import { Header } from "./index";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Card,
@@ -173,7 +173,7 @@ export default function Panel() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="md:w-1/3"
             >
-              <Card className="sticky top-24">
+              <Card className="sticky top-24 bg-white">
                 <CardHeader className="bg-green-900 text-white rounded-t-lg p-4">
                   <CardTitle>Devices</CardTitle>
                 </CardHeader>
@@ -240,7 +240,7 @@ export default function Panel() {
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.5 }}
                       >
-                        <Card className="border-none shadow-lg hover:shadow-xl transition-shadow duration-300 mb-8">
+                        <Card className="border-none shadow-lg hover:shadow-xl transition-shadow duration-300 mb-8 bg-white">
                           <CardHeader className="bg-green-900 text-white rounded-t-lg p-4">
                             <Sprout className="w-10 h-10 text-white mb-2" />
                             <CardTitle>{`Device ID : ${device.machineId}`}</CardTitle>
@@ -291,7 +291,72 @@ export default function Panel() {
           </div>
         </div>
       </main>
-      <Footer />
+      <footer className="bg-green-800 text-white py-8">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-wrap justify-between">
+            <div className="w-full md:w-1/4 mb-6 md:mb-0">
+              <h3 className="text-2xl font-bold mb-4">Sensorice</h3>
+              <p className="text-sm">Smart IoT solutions for paddy fields</p>
+            </div>
+            <div className="w-full md:w-1/4 mb-6 md:mb-0">
+              <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+              <ul className="space-y-2">
+                <li>
+                  <a href="/demo" className="hover:text-green-300">
+                    Demo
+                  </a>
+                </li>
+                <li>
+                  <a href="/" className="hover:text-green-300">
+                    Features
+                  </a>
+                </li>
+                <li>
+                  <a href="/" className="hover:text-green-300">
+                    Products
+                  </a>
+                </li>
+                <li>
+                  <a href="/" className="hover:text-green-300">
+                    About Us
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div className="w-full md:w-1/4 mb-6 md:mb-0">
+              <h4 className="text-lg font-semibold mb-4">Contact</h4>
+              <p className="text-sm mb-2">Email: alvinyoh08@gmail.com</p>
+              {/* <p className="text-sm mb-2">Phone: </p> */}
+              <p className="text-sm">
+                Address: Tangerang Kota, Banten, Indonesia.
+              </p>
+            </div>
+            <div className="w-full md:w-1/4">
+              <h4 className="text-lg font-semibold mb-4">Follow Us</h4>
+              <div className="flex space-x-4">
+                <a href="#" className="hover:text-green-300">
+                  Facebook (soon)
+                </a>
+
+                <a href="#" className="hover:text-green-300">
+                  Twitter (soon)
+                </a>
+                <a
+                  href="https://linked.in/in/alvinyohanes"
+                  className="hover:text-green-300"
+                >
+                  LinkedIn
+                </a>
+              </div>
+            </div>
+          </div>
+          <div className="mt-8 pt-8 border-t border-green-700 text-center">
+            <p className="text-sm">
+              &copy; 2025 SensoRice. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

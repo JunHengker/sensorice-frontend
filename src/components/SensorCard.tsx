@@ -85,7 +85,7 @@ export function SensorCard({
       </CardHeader>
 
       {soilMoistureExplanation ? (
-        <CardContent className="bg-gray-100 p-2">
+        <CardContent className="bg-white-100 p-2">
           <p className="text-2xl font-bold text-green-700">
             {soilMoistureExplanation}
           </p>
@@ -109,7 +109,7 @@ export function SensorCard({
           )}
         </CardContent>
       ) : (
-        <CardContent className="bg-gray-100 space-y-2">
+        <CardContent className="bg-white-100 space-y-2">
           <p className="text-2xl font-bold text-green-700">{displayValue}</p>
         </CardContent>
       )}
