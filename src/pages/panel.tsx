@@ -19,6 +19,7 @@ import {
   Sun,
   CloudSun,
   Cctv,
+  AlertTriangle,
 } from "lucide-react";
 import { WeatherPrediction } from "@/components/WeatherPrediction";
 import { SensorCard } from "@/components/SensorCard";
@@ -53,6 +54,7 @@ const sensorUnits: { [key: string]: string } = {
 export default function Panel() {
   const [selectedDevice, setSelectedDevice] = useState<string | null>(null);
   const [showWeather, setShowWeather] = useState(false);
+  const [showPest, setShowPest] = useState(false);
   const field = useLocation();
   const fieldId = field.state;
 
@@ -146,12 +148,49 @@ export default function Panel() {
   const handleDeviceSelect = (deviceId: string) => {
     setSelectedDevice(deviceId);
     setShowWeather(false);
+    setShowPest(false);
   };
 
   const handleWeatherSelect = () => {
     setSelectedDevice(null);
     setShowWeather(true);
+    setShowPest(false);
   };
+
+  const handlePestSelect = () => {
+    setSelectedDevice(null);
+    setShowWeather(false);
+    setShowPest(true);
+  };
+
+  const predictPestAttack = () => {
+    if (!sensorsData) return null;
+    let pestRisk = { rodent: false, planthopper: false };
+
+    sensorsData.forEach((sensorData) => {
+      sensorData.data.forEach((sensor: any) => {
+        const { type, value } = sensor;
+
+        if (type.toLowerCase() === "motion" && value > 0) {
+          pestRisk.rodent = true;
+        }
+
+        if (type.toLowerCase() === "temperature" && value > 27) {
+          if (
+            sensorData.data.some(
+              (s: any) => s.type.toLowerCase() === "humidity" && s.value > 70
+            )
+          ) {
+            pestRisk.planthopper = true;
+          }
+        }
+      });
+    });
+
+    return pestRisk;
+  };
+
+  const pestRisk = predictPestAttack();
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -203,6 +242,18 @@ export default function Panel() {
                   >
                     <CloudSun className="mr-2 h-5 w-5" />
                     Weather Prediction
+                  </button>
+
+                  <button
+                    onClick={handlePestSelect}
+                    className={`w-full text-left p-2 rounded mb-2 transition-colors flex items-center ${
+                      showPest
+                        ? "bg-green-200 text-green-800"
+                        : "hover:bg-green-100"
+                    }`}
+                  >
+                    <Rat className="mr-2 h-5 w-5" />
+                    Pest Prediction
                   </button>
                 </CardContent>
               </Card>
@@ -286,6 +337,41 @@ export default function Panel() {
                       </motion.div>
                     ))
                 )}
+
+                {showPest ? (
+                  <motion.div
+                    key="pest"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Card className="border-none shadow-lg hover:shadow-xl transition-shadow duration-300 mb-8 bg-white">
+                      <CardHeader className="bg-red-600 text-white rounded-t-lg p-4">
+                        <AlertTriangle className="w-10 h-10 text-white mb-2" />
+                        <CardTitle>Pest Attack Prediction</CardTitle>
+                      </CardHeader>
+                      <CardContent className="pt-6">
+                        {pestRisk?.rodent && (
+                          <p className="text-lg text-red-600">
+                            ⚠️ Rodent activity detected! Consider setting traps.
+                          </p>
+                        )}
+                        {pestRisk?.planthopper && (
+                          <p className="text-lg text-red-600">
+                            ⚠️ High risk of brown planthopper infestation due to
+                            warm, humid conditions.
+                          </p>
+                        )}
+                        {!pestRisk?.rodent && !pestRisk?.planthopper && (
+                          <p className="text-lg text-green-600">
+                            ✅ No immediate pest threats detected.
+                          </p>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ) : null}
               </AnimatePresence>
             </motion.div>
           </div>
